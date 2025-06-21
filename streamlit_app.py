@@ -5,10 +5,10 @@ import plotly.graph_objects as go
 
 st.set_page_config(page_title="Stock Fundamentals", layout="wide")
 
-st.title("📊 Stock Fundamentals Visualizer")
-st.markdown("Get key financials, valuation metrics, and growth insights for any public company.")
+st.title("visualizer for stock fundamentals")
+st.markdown("financials, metrics, insights")
 
-ticker_input = st.text_input("Enter Stock Ticker", value="AAPL").upper()
+ticker_input = st.text_input("enter ticker", value="AAPL").upper()
 ticker = yf.Ticker(ticker_input)
 
 try:
@@ -21,9 +21,9 @@ header_col1, header_col2 = st.columns([4, 1])
 
 with header_col1:
     st.subheader(f"{info.get('longName', ticker_input)} ({ticker_input})")
-    st.markdown(f"**Sector**: {info.get('sector', 'N/A')}")
-    st.markdown(f"**Industry**: {info.get('industry', 'N/A')}")
-    st.markdown(f"**Market Cap**: ${info.get('marketCap', 0):,.0f}")
+    st.markdown(f"**sector**: {info.get('sector', 'N/A')}")
+    st.markdown(f"**industry**: {info.get('industry', 'N/A')}")
+    st.markdown(f"**market cap**: ${info.get('marketCap', 0):,.0f}")
 
 with header_col2:
     logo_url = info.get("logo_url")
@@ -32,7 +32,7 @@ with header_col2:
 
 st.markdown("---")
 
-st.subheader("📐 Key Ratios")
+st.subheader("ratios")
 ratio_col1, ratio_col2, ratio_col3 = st.columns(3)
 
 with ratio_col1:
@@ -52,7 +52,7 @@ with ratio_col3:
 
 st.markdown("---")
 
-st.subheader("📈 Stock Price (1-Year Historical)")
+st.subheader("1y historical stock price")
 hist_data = ticker.history(period="1y")
 
 if hist_data.empty:
@@ -61,16 +61,16 @@ else:
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=hist_data.index, y=hist_data["Close"], mode='lines', name='Close Price'))
     fig.update_layout(
-        title=f"{ticker_input} Closing Price (Last 1 Year)",
-        xaxis_title="Date",
-        yaxis_title="Price",
+        title=f"{ticker_input} closing price (last 1y)",
+        xaxis_title="date",
+        yaxis_title="price",
         template="plotly_white"
     )
     st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("---")
 
-st.subheader("💹 Revenue vs Net Income (Quarterly)")
+st.subheader("quarterly revenue vs. net income")
 
 try:
     quarterly_financials = ticker.quarterly_financials.T
@@ -82,8 +82,8 @@ try:
     fig2.add_trace(go.Bar(x=net.index, y=net.values, name="Net Income"))
     fig2.update_layout(
         barmode='group',
-        title="Quarterly Revenue vs Net Income",
-        xaxis_title="Quarter",
+        title="quarterly revenue vs. net income",
+        xaxis_title="quarter",
         yaxis_title="USD",
         template="plotly_white"
     )
