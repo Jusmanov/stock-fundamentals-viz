@@ -8,7 +8,7 @@ st.set_page_config(page_title="Stock Fundamentals", layout="wide")
 st.title("visualizer for stock fundamentals")
 st.markdown("financials, metrics, insights")
 
-ticker_input = st.text_input("enter ticker", value="AAPL").upper()
+ticker_input = st.text_input("enter ticker", value="JPM").upper()
 ticker = yf.Ticker(ticker_input)
 
 try:
